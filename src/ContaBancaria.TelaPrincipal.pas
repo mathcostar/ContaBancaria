@@ -7,7 +7,7 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Buttons, Vcl.StdCtrls,
   Vcl.Mask, System.Generics.Collections, ContaBancaria.Conta,
-  ContaBancaria.Conta.Cadastro, Vcl.NumberBox;
+  ContaBancaria.Conta.Cadastro, Vcl.NumberBox, Vcl.ComCtrls;
 
 type
   TfrmPrincipal = class(TForm)
@@ -18,7 +18,6 @@ type
     sbtnExibirSaldo: TSpeedButton;
     pnlInformacoes: TPanel;
     grpInformacoesConta: TGroupBox;
-    memHistorico: TMemo;
     lblNomeTitular: TLabel;
     lblHistorico: TLabel;
     lblNumeroConta: TLabel;
@@ -29,6 +28,7 @@ type
     grpAcesso: TGroupBox;
     nbSaldo: TNumberBox;
     cmbNumeroContaAcesso: TComboBox;
+    memHistorico: TRichEdit;
     procedure btnAcessarClick(Sender: TObject);
     procedure sbtnCriarContaClick(Sender: TObject);
     procedure sbtnDepositarClick(Sender: TObject);
@@ -43,9 +43,9 @@ type
     procedure HabilitarBotoes;
     procedure AcessarConta;
     procedure AtualizarInformacoesDosCampos;
+    procedure AdicionarLog(const pMensagem: string; pCor: TColor);
 
     function ValidarAcessoConta: Boolean;
-    function RetornarLogPadraoHistorico(const pMensagem: string): string;
   public
     property ListaContas: TObjectList<TConta> read FListaContas;
   end;
@@ -58,7 +58,7 @@ implementation
 {$R *.dfm}
 
 uses
-  ContaBancaria.Conta.Deposito, ContaBancaria.Conta.Saque;
+  ContaBancaria.Conta.Operacao;
 
 { TfrmPrincipal }
 
@@ -130,20 +130,18 @@ end;
 
 procedure TfrmPrincipal.sbtnDepositarClick(Sender: TObject);
 var
-  lDeposito: TfrmDeposito;
+  lDeposito: TfrmOperacao;
 begin
-  lDeposito := TfrmDeposito.Create(nil);
+  lDeposito := TfrmOperacao.Create(nil, toDeposito);
   try
-    lDeposito.ShowModal;
-
-    if lDeposito.modalResult = mrOk then
+    if lDeposito.ShowModal = mrOk then
       begin
-        FConta.Depositar(lDeposito.nbValorDeposito.Value);
+        FConta.Depositar(lDeposito.nbValor.Value);
 
         AtualizarInformacoesDosCampos();
 
-        memHistorico.Lines.Add(RetornarLogPadraoHistorico(Format('Depósito realizado no valor de R$ %s.',
-          [FormatFloat('#,##0.00', lDeposito.nbValorDeposito.Value)])));
+        AdicionarLog(Format('Depósito realizado no valor de R$ %s.',
+          [FormatFloat('#,##0.00', lDeposito.nbValor.Value)]), clGreen);
       end;
   finally
     FreeAndNil(lDeposito);
@@ -158,18 +156,18 @@ end;
 
 procedure TfrmPrincipal.sbtnSacarClick(Sender: TObject);
 var
-  lSaque: TfrmSaque;
+  lSaque: TfrmOperacao;
 begin
-  lSaque := TfrmSaque.Create(nil);
+  lSaque := TfrmOperacao.Create(nil, toSaque);
   try
     if lSaque.ShowModal = mrOk then
       begin
-        FConta.Sacar(lSaque.nbValorSaque.Value);
+        FConta.Sacar(lSaque.nbValor.Value);
 
         AtualizarInformacoesDosCampos;
 
-        memHistorico.Lines.Add(RetornarLogPadraoHistorico(Format('Saque realizado no valor de R$ %s.',
-          [FormatFloat('#,##0.00', lSaque.nbValorSaque.Value)])));
+        AdicionarLog(Format('Saque realizado no valor de R$ %s.',
+          [FormatFloat('#,##0.00', lSaque.nbValor.Value)]), clRed);
       end;
   finally
     FreeAndNil(lSaque);
@@ -190,12 +188,12 @@ begin
           FConta := lConta;
 
           memHistorico.Clear();
-          memHistorico.Lines.Add(RetornarLogPadraoHistorico('Acessou a conta.'));
+          AdicionarLog('Acessou a conta.', clDefault);
 
           HabilitarBotoes();
 
           cmbNumeroContaAcesso.ItemIndex := -1;
-      
+
           AtualizarInformacoesDosCampos();
 
           Break;
@@ -208,9 +206,13 @@ begin
   Result := cmbNumeroContaAcesso.ItemIndex <> -1;
 end;
 
-function TfrmPrincipal.RetornarLogPadraoHistorico(const pMensagem: string): string;
+procedure TfrmPrincipal.AdicionarLog(const pMensagem: string; pCor: TColor);
 begin
-  Result := DateTimeToStr(Now()) + ' - ' + pMensagem + sLineBreak;
+  memHistorico.SelAttributes.Color := clDefault;
+  memHistorico.SelText := DateTimeToStr(Now()) + ' - ';
+
+  memHistorico.SelAttributes.Color := pCor;
+  memHistorico.SelText := pMensagem + sLineBreak;
 end;
 
 procedure TfrmPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);

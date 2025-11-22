@@ -5,7 +5,7 @@ object frmPrincipal: TfrmPrincipal
   BorderStyle = bsSingle
   Caption = 'Conta Banc'#225'ria - Tela inicial'
   ClientHeight = 300
-  ClientWidth = 924
+  ClientWidth = 876
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -112,7 +112,7 @@ object frmPrincipal: TfrmPrincipal
   object pnlInformacoes: TPanel
     Left = 185
     Top = 0
-    Width = 739
+    Width = 691
     Height = 300
     Align = alClient
     Caption = 'pnlInformacoes'
@@ -122,7 +122,7 @@ object frmPrincipal: TfrmPrincipal
       AlignWithMargins = True
       Left = 4
       Top = 4
-      Width = 731
+      Width = 683
       Height = 292
       Align = alClient
       Caption = 'Informa'#231#245'es da conta'
@@ -143,51 +143,61 @@ object frmPrincipal: TfrmPrincipal
       end
       object lblNumeroConta: TLabel
         Left = 16
-        Top = 114
+        Top = 138
         Width = 96
         Height = 15
         Caption = 'N'#250'mero da conta:'
       end
       object lblSaldo: TLabel
         Left = 16
-        Top = 201
+        Top = 237
         Width = 32
         Height = 15
         Caption = 'Saldo:'
-      end
-      object memHistorico: TMemo
-        Left = 200
-        Top = 47
-        Width = 521
-        Height = 234
-        Enabled = False
-        TabOrder = 0
       end
       object edtNomeTitular: TEdit
         Left = 16
         Top = 47
         Width = 121
         Height = 23
-        Enabled = False
+        ParentCustomHint = False
+        ParentShowHint = False
         ReadOnly = True
-        TabOrder = 1
+        ShowHint = False
+        TabOrder = 0
       end
       object edtNumeroConta: TEdit
         Left = 16
-        Top = 135
+        Top = 159
         Width = 121
         Height = 23
-        Enabled = False
+        ParentCustomHint = False
+        ParentShowHint = False
         ReadOnly = True
-        TabOrder = 2
+        ShowHint = False
+        TabOrder = 1
+        TextHint = 'Acesse sua conta...'
       end
       object nbSaldo: TNumberBox
         Left = 16
-        Top = 222
+        Top = 258
         Width = 119
         Height = 23
-        Enabled = False
         Mode = nbmCurrency
+        ReadOnly = True
+        TabOrder = 2
+      end
+      object memHistorico: TRichEdit
+        Left = 200
+        Top = 47
+        Width = 473
+        Height = 234
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -12
+        Font.Name = 'Segoe UI'
+        Font.Style = []
+        ParentFont = False
         ReadOnly = True
         TabOrder = 3
       end

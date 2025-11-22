@@ -1,9 +1,9 @@
-object frmDeposito: TfrmDeposito
+object frmOperacao: TfrmOperacao
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
-  Caption = 'Conta banc'#225'ria - Depositar'
+  Caption = 'Conta banc'#225'ria - Opera'#231#227'o'
   ClientHeight = 83
   ClientWidth = 380
   Color = clBtnFace
@@ -14,23 +14,23 @@ object frmDeposito: TfrmDeposito
   Font.Style = []
   Position = poOwnerFormCenter
   TextHeight = 15
-  object lblDeposito: TLabel
+  object lblValor: TLabel
     Left = 16
     Top = 27
-    Width = 95
+    Width = 29
     Height = 15
-    Caption = 'Valor do dep'#243'sito:'
+    Caption = 'Valor:'
   end
-  object btnDepositar: TButton
+  object btnOperacao: TButton
     Left = 276
     Top = 23
     Width = 75
     Height = 25
-    Caption = 'Depositar'
+    Caption = 'Opera'#231#227'o'
+    ModalResult = 1
     TabOrder = 0
-    OnClick = btnDepositarClick
   end
-  object nbValorDeposito: TNumberBox
+  object nbValor: TNumberBox
     Left = 117
     Top = 24
     Width = 121

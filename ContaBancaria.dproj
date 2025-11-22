@@ -136,11 +136,8 @@
         <DCCReference Include="src\ContaBancaria.Conta.Cadastro.pas">
             <Form>frmContaCadastro</Form>
         </DCCReference>
-        <DCCReference Include="src\ContaBancaria.Conta.Deposito.pas">
+        <DCCReference Include="src\ContaBancaria.Conta.Operacao.pas">
             <Form>frmDeposito</Form>
-        </DCCReference>
-        <DCCReference Include="src\ContaBancaria.Conta.Saque.pas">
-            <Form>frmSaque</Form>
         </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
