@@ -143,7 +143,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object lblNumeroConta: TLabel
         Left = 16
-        Top = 138
+        Top = 136
         Width = 96
         Height = 15
         Caption = 'N'#250'mero da conta:'
@@ -168,7 +168,7 @@ object frmPrincipal: TfrmPrincipal
       end
       object edtNumeroConta: TEdit
         Left = 16
-        Top = 159
+        Top = 157
         Width = 121
         Height = 23
         ParentCustomHint = False

@@ -24,6 +24,8 @@ type
     FNomeTitular: string;
     FSaldo: Double;
   public
+    constructor Create; reintroduce;
+
     procedure Depositar(pValorDeposito: Double);
     procedure Sacar(pValorSaque: Double);
 
@@ -39,6 +41,13 @@ type
 implementation
 
 { TConta }
+
+constructor TConta.Create;
+begin
+  inherited Create();
+
+  FSaldo := 0;
+end;
 
 procedure TConta.Depositar(pValorDeposito: Double);
 begin
